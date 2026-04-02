@@ -5054,6 +5054,7 @@ html {
     color: #fff;
     font-family: var(--font-secondary);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    resize: none;
 }
 
 .form-group input:focus, 
