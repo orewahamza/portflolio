@@ -386,7 +386,7 @@ a {
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: var(--space-3xl);
+    padding: 120px var(--space-3xl) var(--space-3xl);
     overflow: hidden;
 }
 

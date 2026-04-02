@@ -71,36 +71,38 @@ document.addEventListener('DOMContentLoaded', () => {
         initAccessibility();
 
         // 3. Reveal and Sync
-        // Wait for all calculations to settle
-        requestAnimationFrame(() => {
-            // Unlock ScrollTrigger
-            ScrollTrigger.config({ limitCallbacks: false });
-            ScrollTrigger.refresh();
+        // Wait for all calculations to settle AND fonts to load
+        document.fonts.ready.then(() => {
+            requestAnimationFrame(() => {
+                // Unlock ScrollTrigger
+                ScrollTrigger.config({ limitCallbacks: false });
+                ScrollTrigger.refresh();
 
-            // Sync UI to current position
-            if (window.updateScrollDock) window.updateScrollDock(true);
-            if (isDeepLink && window.updateNavUI) {
-                window.updateNavUI(bootHash.replace('#', ''), true);
-            }
+                // Sync UI to current position
+                if (window.updateScrollDock) window.updateScrollDock(true);
+                if (isDeepLink && window.updateNavUI) {
+                    window.updateNavUI(bootHash.replace('#', ''), true);
+                }
 
-            // FADE IN
-            document.body.classList.remove('is-loading');
-            if (window.lenis) window.lenis.start();
+                // FADE IN
+                document.body.classList.remove('is-loading');
+                if (window.lenis) window.lenis.start();
 
-            // Run Entrance Animations ONLY if we are at the top (Home)
-            if (!isDeepLink) {
-                const heroTL = gsap.timeline({ defaults: { ease: "power4.out" } });
-                heroTL.from(".greeting", { opacity: 0, x: -30, duration: 1, delay: 0.2 })
-                    .from(".name", { opacity: 0, y: 30, scale: 0.95, duration: 1.2 }, "-=0.8")
-                    .from(".hero .title", { opacity: 0, x: -20, duration: 1 }, "-=1")
-                    .from(".cta-buttons", { opacity: 0, y: 20, duration: 0.8 }, "-=0.8")
-                    .from(".social-icon", { opacity: 0, y: 20, stagger: 0.1, duration: 0.8 }, "-=0.6")
-                    .from(".hero-image", { opacity: 0, scale: 0.8, x: 50, duration: 1.5 }, "-=1.5")
-                    .from(".scroll-indicator", { opacity: 0, y: -20, duration: 1 }, "-=0.5")
-                    .from(".code-line", { opacity: 0, x: -10, duration: 0.5, stagger: 0.3 }, "-=0.5");
-            }
+                // Run Entrance Animations ONLY if we are at the top (Home)
+                if (!isDeepLink) {
+                    const heroTL = gsap.timeline({ defaults: { ease: "power4.out" } });
+                    heroTL.from(".greeting", { opacity: 0, x: -30, duration: 1, delay: 0.2 })
+                        .from(".name", { opacity: 0, y: 30, scale: 0.95, duration: 1.2 }, "-=0.8")
+                        .from(".hero .title", { opacity: 0, x: -20, duration: 1 }, "-=1")
+                        .from(".cta-buttons", { opacity: 0, y: 20, duration: 0.8 }, "-=0.8")
+                        .from(".social-icon", { opacity: 0, y: 20, stagger: 0.1, duration: 0.8 }, "-=0.6")
+                        .from(".hero-image", { opacity: 0, scale: 0.8, x: 50, duration: 1.5 }, "-=1.5")
+                        .from(".scroll-indicator", { opacity: 0, y: -20, duration: 1 }, "-=0.5")
+                        .from(".code-line", { opacity: 0, x: -10, duration: 0.5, stagger: 0.3 }, "-=0.5");
+                }
 
-            initNavLamp();
+                initNavLamp();
+            });
         });
     }, 80); // Tightened boot window for a more professional, snappier feel
 
