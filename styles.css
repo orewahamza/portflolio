@@ -468,6 +468,7 @@ a {
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 900;
     line-height: 1;
+    margin-top: 0;
     margin-bottom: 15px;
     display: inline-block;
     transition: transform 0.2s ease-out;
@@ -905,7 +906,7 @@ a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4xl);
-    align-items: center;
+    align-items: flex-start;
 }
 
 .about-text .section-title {
@@ -965,6 +966,9 @@ a {
     gap: var(--space-xl);
     perspective: 1500px;
     transform-style: preserve-3d;
+    position: sticky;
+    top: 140px;
+    align-self: flex-start;
 }
 
 .about-stats {
@@ -2069,19 +2073,20 @@ a {
 
 .projects-vertical-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* Changed to 2 columns for 2 projects */
     grid-auto-rows: auto;
-    gap: var(--space-2xl);
+    gap: var(--space-4xl); /* Increased gap for larger cards */
     align-items: start; /* Allows cards to have different heights */
     width: 100%;
-    margin-top: var(--space-2xl);
+    max-width: 1000px; /* Constrain width so it doesn't get ridiculously huge on ultrawides */
+    margin: var(--space-2xl) auto 0; /* Center horizontally */
     perspective: 2000px;
 }
 
 @media (max-width: 1250px) {
     .projects-vertical-container {
-        grid-template-columns: repeat(3, 1fr); /* Force 3 columns for wider screens */
-        gap: var(--space-md);
+        grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
+        gap: var(--space-xl);
     }
 }
 
@@ -2353,6 +2358,8 @@ a {
     flex-direction: column;
     flex-grow: 1;
     justify-content: space-between;
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center the text inside spans/h3 */
 }
 
 .card-info h3 {
@@ -3007,9 +3014,7 @@ a {
         font-size: 0.88rem !important;
     }
 
-    .form-group textarea {
-        rows: 3;
-    }
+
 
     .form-submit-btn {
         padding: 12px !important;

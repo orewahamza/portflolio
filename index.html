@@ -76,10 +76,11 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- ================================
          SECTION 1: HOME / HERO
     ================================ -->
-    <section id="home" class="hero">
+    <section id="home" class="hero" aria-labelledby="hero-title">
         <div class="hero-background">
             <div class="gradient-overlay"></div>
             <div class="hero-particles" id="hero-particles"></div>
@@ -87,20 +88,40 @@
 
         <div class="hero-content">
             <div class="hero-text">
-                <p class="greeting">Hello, I'm</p>
-                <h1 class="name">
-                    <span class="first-name">HAMZA</span>
+                <p class="greeting" style="text-transform: none; letter-spacing: 1px; font-size: 1.2rem; color: var(--text-primary);">Hi, I'm</p>
+                <h1 class="name" id="hero-title">
+                    <span class="first-name">Hamza</span>
                 </h1>
-                <p class="title">Full Stack Web Developer</p>
+                <p class="title">Full-Stack Web Developer</p>
+
+                <div class="hero-description" style="margin-bottom: 2rem; max-width: 500px;">
+                    <p class="reveal-text" style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 1.05rem;">
+                        I build fast, scalable web applications for startups and businesses 
+                        using the MERN stack.
+                    </p>
+                    <p class="reveal-text" style="color: var(--text-primary); margin-bottom: 0.8rem; font-weight: 500;">
+                        What I've built:
+                    </p>
+                    <ul class="reveal-text" style="list-style-type: none; padding-left: 0; color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-primary); margin-right: 8px;">✓</span> Interactive learning platforms with admin dashboards</li>
+                        <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent-primary); margin-right: 8px;">✓</span> E-commerce solutions with order management</li>
+                    </ul>
+                    <p class="reveal-text" style="color: var(--text-secondary); font-style: italic; font-size: 0.95rem;">
+                        — All with clean code, responsive design, and on-time delivery.
+                    </p>
+                </div>
 
                 <div class="cta-buttons">
                     <a href="#projects" class="btn btn-filled">
-                        <span>SEE PROJECTS</span>
+                        <span>View My Work</span>
+                    </a>
+                    <a href="#contact" class="btn btn-outline" style="border: 1px solid var(--accent-primary); background: transparent; color: var(--accent-primary);">
+                        <span>Contact Me</span>
                     </a>
                 </div>
             </div>
 
-            <div class="hero-image">
+            <div class="hero-image" aria-hidden="true">
                 <div class="desk-setup">
                     <div class="monitor glowing-container">
                         <div class="glowing-effect"></div>
@@ -143,7 +164,7 @@
         </div>
 
         <div class="scroll-indicator">
-            <a href="#about">
+            <a href="#about" aria-label="Scroll down to About section">
                 <div class="mouse">
                     <div class="wheel"></div>
                 </div>
@@ -162,27 +183,53 @@
                     <div class="spacer"></div>
 
                     <div class="about-description">
-                        <p class="reveal-text">
-                            Full Stack Web Developer with a passion for creating
-                            dynamic and responsive web applications. I specialize
-                            in building modern websites using cutting-edge technologies.
+                        <p class="reveal-text" style="color: var(--text-primary);">
+                            Hey, I'm Hamza — a full-stack web developer specializing in 
+                            building modern web applications with the MERN stack.
                         </p>
-                        <p class="reveal-text">
-                            On the <span class="highlight">frontend</span>, I work with
-                            <strong>HTML, CSS, JavaScript, React</strong>, and
-                            <strong>Tailwind CSS</strong> to craft beautiful,
-                            user-friendly interfaces.
+                        <p class="reveal-text" style="color: var(--text-secondary);">
+                            I got into web development because I love solving problems and 
+                            turning ideas into real, working products that people actually use. 
+                            Whether it's a learning platform with complex quiz systems or an 
+                            e-commerce store, I focus on building solutions that work.
                         </p>
-                        <p class="reveal-text">
-                            For the <span class="highlight">backend</span>, I use the
-                            <strong>MERN Stack</strong> (MongoDB, Express.js, React, Node.js)
-                            to build robust, scalable server-side applications and RESTful APIs.
+                        
+                        <h3 class="reveal-text" style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">What I Build:</h3>
+                        <ul class="reveal-text" style="list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            <li>• Interactive platforms with admin dashboards</li>
+                            <li>• E-commerce solutions with shopping carts & order management</li>
+                            <li>• SaaS applications with user authentication & role-based access</li>
+                            <li>• RESTful APIs and database architecture</li>
+                            <li>• Responsive, mobile-first interfaces that look great on any device</li>
+                        </ul>
+
+                        <h3 class="reveal-text" style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">How I Work:</h3>
+                        <p class="reveal-text" style="color: var(--text-secondary);">
+                            I believe in clear communication and realistic timelines. When you 
+                            hire me, you get regular updates, clean documented code, and a 
+                            product that works exactly as promised. No surprises, no excuses 
+                            — just solid work delivered on time.
                         </p>
-                        <p class="reveal-text">
-                            I love turning complex problems into simple, beautiful,
-                            and intuitive solutions. Always eager to learn new
-                            technologies and improve my skills.
+
+                        <h3 class="reveal-text" style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">My Tech Stack:</h3>
+                        <ul class="reveal-text" style="list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                            <li><strong style="color: var(--text-primary);">Frontend:</strong> React.js, Tailwind CSS, HTML5, CSS3, JavaScript (ES6+)</li>
+                            <li><strong style="color: var(--text-primary);">Backend:</strong> Node.js, Express.js, MongoDB, Mongoose, REST APIs</li>
+                            <li><strong style="color: var(--text-primary);">Authentication:</strong> JWT, Google OAuth, session management</li>
+                            <li><strong style="color: var(--text-primary);">Tools & Deployment:</strong> Git, GitHub, Vercel, VS Code</li>
+                        </ul>
+
+                        <h3 class="reveal-text" style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">Ready to Start?</h3>
+                        <p class="reveal-text" style="color: var(--text-secondary);">
+                            I'm currently accepting new projects. Whether you need a landing page
+                            or a full-stack application, let's discuss how I can help 
+                            bring your ideas to life.
                         </p>
+                        
+                        <div class="reveal-text" style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <a href="#projects" class="btn btn-filled">View My Projects</a>
+                            <a href="#contact" class="btn btn-outline">Contact Me</a>
+                        </div>
                     </div>
                 </div>
 
@@ -566,9 +613,8 @@
                             <div class="card-info">
                                 <h3>Fashop</h3>
                                 <div class="card-tags">
-                                    <span>React</span>
-                                    <span>MERN Stack</span>
-                                    <span>Tailwind CSS</span>
+                                    <span>E-Commerce Platform</span>
+                                    <span>Product Filtering & Dynamic Cart</span>
                                 </div>
                                 <button class="btn btn-outline small flip-btn">
                                     <span>Wanna know more?</span>
@@ -644,9 +690,9 @@
                             <div class="card-info">
                                 <h3>LearnCode</h3>
                                 <div class="card-tags">
-                                    <span>Education</span>
-                                    <span>Resources</span>
-                                    <span>Quizzes</span>
+                                    <span>Tech Learning Hub</span>
+                                    <span>Interactive Quizzes</span>
+                                    <span>Progress Tracking</span>
                                 </div>
                                 <button class="btn btn-outline small flip-btn">
                                     <span>Wanna know more?</span>
@@ -703,87 +749,6 @@
                     </div>
                 </div>
 
-                <!-- Project 3: TechMade AI -->
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <!-- Front Face -->
-                        <div class="card-front glowing-container">
-                            <div class="glowing-effect"></div>
-                            <div class="card-header-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <div class="card-image">
-                                <div class="placeholder-project project-tech" aria-label="Tech-Made AI Project Visual">
-                                    <i class="fas fa-robot"></i>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Tech-Made AI</h3>
-                                <div class="card-tags">
-                                    <span>AI Chat</span>
-                                    <span>DALL-E</span>
-                                    <span>Admin Panel</span>
-                                </div>
-                                <button class="btn btn-outline small flip-btn">
-                                    <span>Wanna know more?</span>
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Back Face -->
-                        <div class="card-back glowing-container">
-                            <div class="glowing-effect"></div>
-                            <div class="card-header-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <div class="back-content">
-                                <h3 class="back-title">Project Details</h3>
-                                <p class="project-detailed-desc">Tech-made is a simple chat bot site where users can
-                                    login to chat with AI (like ChatGPT) and generate images using DALL-E. Includes an
-                                    admin panel for user oversight.</p>
-                                <ul class="project-features">
-                                    <li><i class="fas fa-check-circle"></i> AI-Powered Chat Interface</li>
-                                    <li><i class="fas fa-check-circle"></i> Creative Image Generation</li>
-                                    <li><i class="fas fa-check-circle"></i> Secure User Portal</li>
-                                    <li><i class="fas fa-check-circle"></i> Comprehensive Admin Dashboard</li>
-                                </ul>
-                                <div class="project-actions">
-                                    <a href="https://github.com/orewahamza/tech-made.git" target="_blank"
-                                        class="btn btn-outline small">
-                                        <i class="fab fa-github"></i> GitHub
-                                    </a>
-                                    <a href="https://tech-made.onrender.com" target="_blank"
-                                        class="btn btn-filled small">
-                                        <i class="fas fa-external-link-alt"></i> Live
-                                    </a>
-                                </div>
-                                <div class="project-details-btn-container">
-                                    <button class="btn btn-filled small know-more-btn" data-project="tech">
-                                        <span>Wanna know even more?</span>
-                                    </button>
-                                </div>
-                                <button class="btn btn-text flip-back-btn">
-
-                                    <i class="fas fa-arrow-left"></i> Back to Front
-                                </button>
-                                <div class="project-warning">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    <p>OpenRouter Warning: If a reply doesn't come or an error occurs, my free credits
-                                        may be exhausted. Please try again later!</p>
-                                </div>
-                                <div class="project-warning">
-                                    <i class="fas fa-info-circle"></i>
-                                    <p>Hosted on Render (Free Tier) - Initial load may take 30-60s.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -894,6 +859,8 @@
             </div>
         </div>
     </section>
+
+    </main>
 
     <!-- Footer -->
 

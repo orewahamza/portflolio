@@ -2453,6 +2453,7 @@ function initExtraAnimations() {
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
+        delay: 2, // Wait for the entrance animation to finish before recording starting Y values
         force3D: true // Ensure subpixel anti-aliasing
     });
 
@@ -2658,18 +2659,21 @@ function initChatbot() {
 
 // 21. About Section Text Highlight on Scroll
 function initTextReveal() {
-    const revealTexts = document.querySelectorAll('.about-text p');
+    const revealTexts = document.querySelectorAll('.about-text .reveal-text, .about-text .about-email, .hero-description .reveal-text');
     
+    // Convert NodeList to array to help with batch scoping if needed
     revealTexts.forEach((el, index) => {
-        if (!el.classList.contains('reveal-text') && !el.classList.contains('about-email')) return;
 
-        // Wide, robust mask: 50% solid + soft fade. At 300% size, this ensures the full text is covered.
+        // Setup start state. Use willChange to promote to its own GPU layer
         gsap.set(el, { 
             opacity: 0, 
-            y: 15,
+            y: 20,
             webkitMaskImage: "linear-gradient(to right, #000 50%, transparent 100%)",
             webkitMaskSize: "300% 100%",
-            webkitMaskPosition: "100% 0%"
+            webkitMaskPosition: "100% 0%",
+            willChange: "transform, opacity",
+            // Small Z translation forces a stable GPU texture that isn't re-rasterized every frame
+            z: 0.1
         });
 
         const startTyping = () => {
@@ -2685,25 +2689,34 @@ function initTextReveal() {
                 opacity: 1,
                 y: 0,
                 webkitMaskPosition: "0% 0%",
-                duration: 2.2,
+                duration: 1.5, // Faster entrance
                 ease: "power2.out",
-                delay: index * 0.25
+                force3D: true,
+                // Removed `index * 0.25` delay! Since each has its own ScrollTrigger based on their position, they stagger naturally.
+                // We add a tiny fixed delay to ensure smooth paint composite.
+                delay: 0.1, 
+                onComplete: () => {
+                    // Clear the mask property here so it doesn't interfere with the smooth floating and pixel-snap the text.
+                    gsap.set(el, { clearProps: "webkitMaskImage,webkitMaskSize,webkitMaskPosition" });
+                }
             });
 
-            // 2. Continuous "Alive" Floating (Unique stagger)
+            // 2. Continuous "Alive" Floating
+            // Increased the distance (-15 instead of -8) and reduced duration text so it moves fast enough 
+            // that the browser can apply smooth fractional rendering without snapping to integer pixels ("staircasing").
             tl.to(el, {
-                y: -5,
-                duration: 3 + (index * 0.8),
+                y: -12, 
+                duration: 2.8,
                 repeat: -1,
                 yoyo: true,
-                ease: "sine.inOut",
-                delay: Math.random()
-            });
+                ease: "power1.inOut",
+                force3D: true
+            }, ">");
         };
 
         ScrollTrigger.create({
             trigger: el,
-            start: "top 92%",
+            start: "top 95%", // Made it trigger earlier (95% down the viewport)
             onEnter: startTyping,
             onEnterBack: startTyping,
             onLeaveBack: () => {
@@ -2711,10 +2724,18 @@ function initTextReveal() {
                 gsap.killTweensOf(el);
                 gsap.to(el, {
                     opacity: 0,
-                    y: 15,
+                    y: 20,
                     webkitMaskPosition: "100% 0%",
-                    duration: 0.6,
-                    ease: "power2.in"
+                    duration: 0.4,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        // Restore mask for next time
+                        gsap.set(el, {
+                            webkitMaskImage: "linear-gradient(to right, #000 50%, transparent 100%)",
+                            webkitMaskSize: "300% 100%",
+                            webkitMaskPosition: "100% 0%"
+                        });
+                    }
                 });
             }
         });
