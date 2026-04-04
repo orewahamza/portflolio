@@ -1,0 +1,10 @@
+# Secret Keys
+config.js
+.env
+
+# Node.js
+node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db

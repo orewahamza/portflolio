@@ -1608,6 +1608,12 @@ function initSimpleForm() {
         });
     }
 
+    // Populate key from config
+    const keyInput = document.getElementById('web3forms-access-key-input');
+    if (keyInput && window.config && window.config.WEB3FORMS_ACCESS_KEY) {
+        keyInput.value = window.config.WEB3FORMS_ACCESS_KEY;
+    }
+
     // Helper: fade buttons out (up) and hide
     function hideButtons() {
         return new Promise(resolve => {
@@ -1984,7 +1990,7 @@ function initInteractiveTerminal() {
                             Accept: "application/json",
                         },
                         body: JSON.stringify({
-                            access_key: "a6cdd593-43e0-417a-a1ba-aa3d4bc87dc0", // Web3Forms Access Key
+                            access_key: window.config ? window.config.WEB3FORMS_ACCESS_KEY : "", // Web3Forms Access Key
                             name: "Terminal User",
                             email: tempEmail,
                             message: cleanCmd,
