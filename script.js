@@ -537,8 +537,12 @@ function initSectionWipes() {
     }
 
     ScrollTrigger.batch(elementsToAnimate, {
-        start: "top 85%",
+        start: "top 75%", // Trigger further in view
         onEnter: (batch) => {
+            if (isNavigating) {
+                gsap.set(batch, { opacity: 1, y: 0 });
+                return;
+            }
             gsap.to(batch, {
                 opacity: 1,
                 y: 0,
@@ -579,8 +583,14 @@ function initSectionWipes() {
 
         ScrollTrigger.create({
             trigger: hireMeCard,
-            start: "top 80%", // Reveal card earlier when scrolling down, hide earlier when scrolling up
-            onEnter: () => gsap.to(hireMeCard, { opacity: 1, duration: 0.8, ease: "power2.out", overwrite: "auto", pointerEvents: "auto" }),
+            start: "top 75%", // Reveal card slightly later
+            onEnter: () => {
+                if (isNavigating) {
+                    gsap.set(hireMeCard, { opacity: 1 });
+                } else {
+                    gsap.to(hireMeCard, { opacity: 1, duration: 0.8, ease: "power2.out", overwrite: "auto", pointerEvents: "auto" });
+                }
+            },
             onEnterBack: () => gsap.to(hireMeCard, { opacity: 1, duration: 0.8, ease: "power2.out", overwrite: "auto", pointerEvents: "auto" }),
             onLeaveBack: () => gsap.to(hireMeCard, { opacity: 0, duration: 0.5, ease: "power2.inOut", overwrite: "auto", pointerEvents: "none" })
         });
@@ -591,8 +601,12 @@ function initSectionWipes() {
         gsap.set(skillCategories, { opacity: 0, y: 30 });
 
         ScrollTrigger.batch(skillCategories, {
-            start: "top 80%",
+            start: "top 75%",
             onEnter: (batch) => {
+                if (isNavigating) {
+                    gsap.set(batch, { opacity: 1, y: 0 });
+                    return;
+                }
                 gsap.to(batch, {
                     opacity: 1,
                     y: 0,
@@ -674,6 +688,14 @@ function initSectionWipes() {
         ScrollTrigger.batch(serviceCards, {
             start: "top 70%",
             onEnter: (batch) => {
+                if (isNavigating) {
+                    gsap.set(batch, { opacity: 1, y: 0 });
+                    batch.forEach(card => {
+                        const targets = card.querySelectorAll('h3, p, .service-features li span, .btn-text');
+                        targets.forEach(t => t.dataset.typed = "true");
+                    });
+                    return;
+                }
                 gsap.to(batch, {
                     opacity: 1,
                     y: 0,
@@ -692,24 +714,28 @@ function initSectionWipes() {
 
                             if (title && !title.dataset.typed) {
                                 const originalTitle = title.innerText;
+                                title.style.minHeight = title.offsetHeight + "px"; // Freeze height
                                 title.innerText = "";
                                 gsap.to(title, {
                                     duration: 0.8,
                                     text: originalTitle,
                                     ease: "none",
-                                    delay: 0.2
+                                    delay: 0.2,
+                                    onComplete: () => { title.style.minHeight = ""; }
                                 });
                                 title.dataset.typed = "true";
                             }
 
                             if (desc && !desc.dataset.typed) {
                                 const originalDesc = desc.innerText;
+                                desc.style.minHeight = desc.offsetHeight + "px"; // Freeze height
                                 desc.innerText = "";
                                 gsap.to(desc, {
                                     duration: 1.5,
                                     text: originalDesc,
                                     ease: "none",
-                                    delay: 0.6
+                                    delay: 0.6,
+                                    onComplete: () => { desc.style.minHeight = ""; }
                                 });
                                 desc.dataset.typed = "true";
                             }
@@ -719,6 +745,7 @@ function initSectionWipes() {
                                     if (!span.dataset.typed) {
                                         const originalText = span.innerText;
                                         const li = span.parentElement;
+                                        li.style.minHeight = li.offsetHeight + "px"; // Stabilize height
                                         span.innerText = "";
                                         gsap.set(li, { opacity: 0 }); // Hide the whole line (including icon) initially
 
@@ -729,6 +756,9 @@ function initSectionWipes() {
                                             delay: 1.2 + (index * 0.4),
                                             onStart: () => {
                                                 gsap.to(li, { opacity: 1, duration: 0.3 }); // Fade in the icon + line as typing starts
+                                            },
+                                            onComplete: () => {
+                                                li.style.minHeight = ""; // Clean up
                                             }
                                         });
                                         span.dataset.typed = "true";
@@ -2715,9 +2745,21 @@ function initTextReveal() {
 
         ScrollTrigger.create({
             trigger: el,
-            start: "top 95%", // Made it trigger earlier (95% down the viewport)
-            onEnter: startTyping,
-            onEnterBack: startTyping,
+            start: "top 80%", // Only trigger when section is more visible to prevent jumpy layout shifts
+            onEnter: () => {
+                if (isNavigating) {
+                    gsap.set(el, { opacity: 1, y: 0, webkitMaskPosition: "0% 0%" });
+                } else {
+                    startTyping();
+                }
+            },
+            onEnterBack: () => {
+                 if (isNavigating) {
+                    gsap.set(el, { opacity: 1, y: 0, webkitMaskPosition: "0% 0%" });
+                } else {
+                    startTyping();
+                }
+            },
             onLeaveBack: () => {
                 el.dataset.typingStarted = 'false';
                 gsap.killTweensOf(el);
