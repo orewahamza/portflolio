@@ -1161,40 +1161,6 @@ function initProjectFlips() {
 
 // 17. Project Details Data
 const projectData = {
-    fash: {
-        title: "Fashop",
-        reason: "I built Fashop to explore the complexities of MERN stack integration, focusing on real-time cart updates and secure user sessions. I wanted to create a seamless shopping experience that felt modern and responsive.",
-        process: "The process involved designing a modular React architecture, implementing a robust Node.js backend with Express, and using MongoDB for flexible data storage. I utilized GSAP for premium UI transitions and Tailwind CSS for rapid, scalable styling.",
-        features: [
-            "Secure Clerk Authentication",
-            "Real-time Cart Management",
-            "Mongoose Data Modeling",
-            "Optimized Asset Loading",
-            "Responsive Design Patterns"
-        ],
-        github: "https://github.com/orewahamza/fash-shop.git",
-        live: "https://fash-shop.onrender.com",
-        desktop: [
-            "images/fash-shop/screencapture-fash-shop-onrender-2026-03-17-20_52_12.png",
-            "images/fash-shop/screencapture-fash-shop-onrender-collection-2026-03-17-20_52_23.png",
-            "images/fash-shop/screencapture-fash-shop-onrender-about-2026-03-17-20_52_48.png",
-            "images/fash-shop/screencapture-fash-shop-onrender-contact-2026-03-17-20_52_56.png",
-            "images/fash-shop/screencapture-fash-shop-onrender-cart-2026-03-17-20_53_07.png",
-            "images/fash-shop/screencapture-fash-shop-onrender-host-list-2026-03-17-20_53_31.png",
-            "images/fash-shop/screencapture-fash-shop-onrender-host-add-2026-03-17-20_53_40.png",
-            "images/fash-shop/screencapture-fash-shop-onrender-host-orders-2026-03-17-20_53_47.png"
-        ],
-        mobile: [
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max).png",
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max) (1).png",
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max) (2).png",
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max) (3).png",
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max) (4).png",
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max) (5).png",
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max) (6).png",
-            "images/fash-shop/fash-shop.onrender.com_host_list(iPhone 14 Pro Max) (7).png"
-        ]
-    },
     learn: {
         title: "LearnCode",
         reason: "Education accessibility is important to me. LearnCode was born from the desire to consolidate fragmented learning resources into a single, interactive roadmap for aspiring developers.",
@@ -1235,34 +1201,6 @@ const projectData = {
             "images/learn-code/learn-code-ta9i.onrender.com_roadmaps(iPhone 14 Pro Max) (7).png",
             "images/learn-code/learn-code-ta9i.onrender.com_roadmaps(iPhone 14 Pro Max) (6).png",
             "images/learn-code/learn-code-ta9i.onrender.com_roadmaps(iPhone 14 Pro Max) (8).png"
-        ]
-    },
-    tech: {
-        title: "Tech-Made AI",
-        reason: "As AI becomes more integrated into our lives, I wanted to build a portal that makes these complex tools accessible and fun to use while maintaining a secure environment for users.",
-        process: "Integrating OpenRouter and OpenAI APIs required careful handling of asynchronous operations and error boundaries. I implemented a credit-based system to manage API limits and built an oversight panel for administration.",
-        features: [
-            "AI Chat & Image Generation",
-            "API Credit Management",
-            "Secure OAuth Integration",
-            "Admin Oversight Panel",
-            "Custom AI Model Selection"
-        ],
-        github: "https://github.com/orewahamza/tech-made.git",
-        live: "https://tech-made.onrender.com",
-        desktop: [
-            "images/tech-made/tech-made-home-desktop.png",
-            "images/tech-made/screencapture-tech-made-onrender-chat-2026-03-16-22_04_43.png",
-            "images/tech-made/screencapture-tech-made-onrender-image-generations-2026-03-16-22_04_06.png",
-            "images/tech-made/screencapture-tech-made-onrender-pricing-2026-03-16-22_05_16.png",
-            "images/tech-made/screencapture-tech-made-onrender-admin-2026-03-17-01_07_13.png"
-        ],
-        mobile: [
-            "images/tech-made/tech-made.onrender.com_home(iPhone XR).png",
-            "images/tech-made/tech-made.onrender.com_(iPhone XR) (2).png",
-            "images/tech-made/tech-made.onrender.com_image-generations(iPhone XR) (1).png",
-            "images/tech-made/tech-made.onrender.com_image-generations(iPhone XR) (2).png",
-            "images/tech-made/tech-made.onrender.com_(iPhone XR) (5).png"
         ]
     }
 };

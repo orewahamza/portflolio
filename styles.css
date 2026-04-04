@@ -2095,33 +2095,33 @@ a {
 }
 
 .projects-vertical-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Changed to 2 columns for 2 projects */
-    grid-auto-rows: auto;
-    gap: var(--space-4xl); /* Increased gap for larger cards */
-    align-items: start; /* Allows cards to have different heights */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4xl);
     width: 100%;
-    max-width: 1000px; /* Constrain width so it doesn't get ridiculously huge on ultrawides */
-    margin: var(--space-2xl) auto 0; /* Center horizontally */
+    max-width: 900px;
+    margin: var(--space-2xl) auto 0;
     perspective: 2000px;
 }
 
 @media (max-width: 1250px) {
     .projects-vertical-container {
-        grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
-        gap: var(--space-xl);
+        max-width: 100%;
+        padding: 0 var(--space-md);
     }
 }
 
 @media (max-width: 968px) {
     .projects-vertical-container {
-        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
     }
 }
 
 @media (max-width: 600px) {
     .projects-vertical-container {
-        grid-template-columns: 1fr;
+        max-width: 100%;
+        padding: 0 var(--space-sm);
     }
 }
 
@@ -2130,8 +2130,9 @@ a {
     background: transparent !important;
     border: none !important;
     perspective: 1200px;
-    height: 480px;
+    height: 580px; /* Increased height for prominence */
     width: 100%;
+    max-width: 850px; /* Constrain card width */
     position: relative;
     z-index: 1;
     transform: none !important;
@@ -2142,7 +2143,7 @@ a {
 
 
 .card-image {
-    height: 200px;
+    height: 320px; /* Increased image height */
     width: 100%;
     background: var(--bg-secondary);
     display: flex;
