@@ -64,10 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initProjectFlips();
         initProjectModal();
         initExtraAnimations();
-        init3DName();
-        initMouseSpotlight();
-        initChatbot();
-        initTextReveal();
         initAccessibility();
 
         // 3. Reveal and Sync
@@ -89,27 +85,75 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (window.lenis) window.lenis.start();
 
                 // Ensure all hero elements are visible immediately after loading screen disappears
-                // This prevents elements from being stuck hidden if the animation is skipped (e.g. deep linking)
-                gsap.set(".name, .greeting, .hero .title, .cta-buttons, .social-icon, .hero-image", { visibility: "visible" });
+                // gsap.set(".name, .greeting, .hero .title, .cta-buttons, .social-icon, .hero-image", { visibility: "visible" }); // Replaced by timeline reveals
+                gsap.set(".social-icon", { visibility: "visible" }); 
+
 
                 // Run Entrance Animations ONLY if we are at the top (Home)
                 if (!isDeepLink) {
                     // Tiny delay to ensure browser layout engine settles (fixes "Requires Refresh" bugs)
                     setTimeout(() => {
-                        const heroTL = gsap.timeline({ defaults: { ease: "power4.out" } });
-                        heroTL.from(".greeting", { opacity: 0, x: -30, duration: 1, delay: 0.2 })
-                            .from(".name", { opacity: 0, y: 30, scale: 0.95, duration: 1.2 }, "-=0.8")
-                            .from(".hero .title", { opacity: 0, x: -20, duration: 1 }, "-=1")
-                            .from(".cta-buttons", { opacity: 0, y: 20, duration: 0.8 }, "-=0.8")
-                            .from(".social-icon", { opacity: 0, y: 20, stagger: 0.1, duration: 0.8 }, "-=0.6")
-                            .from(".hero-image", { opacity: 0, scale: 0.8, x: 50, duration: 1.5 }, "-=1.5")
-                            .from(".scroll-indicator", { opacity: 0, y: -20, duration: 1 }, "-=0.5")
-                            .from(".code-line", { opacity: 0, x: -10, duration: 0.5, stagger: 0.3 }, "-=0.5")
-                            .eventCallback("onComplete", () => {
+                        const heroTL = gsap.timeline({ 
+                            defaults: { ease: "power4.out" },
+                            onComplete: () => {
                                 // Final sync after animations to catch any layout changes
                                 ScrollTrigger.refresh();
-                            });
+                                // Initialize 3D Name effect ONLY after the animation is finished to prevent misplacement
+                                init3DName();
+                                initMouseSpotlight();
+                                initChatbot();
+                                initTextReveal();
+                            }
+                        });
+
+                        // Use fromTo for absolute control over the first-load state
+                        heroTL.fromTo(".greeting", 
+                            { opacity: 0, x: -30 }, 
+                            { opacity: 1, x: 0, duration: 1, delay: 0.2 }
+                        )
+                        .fromTo(".name", 
+                            { opacity: 0, y: 30, scale: 0.95 },
+                            { opacity: 1, y: 0, scale: 1, duration: 1.2 }, 
+                            "-=0.8"
+                        )
+                        .fromTo(".hero .title", 
+                            { opacity: 0, x: -20 },
+                            { opacity: 1, x: 0, duration: 1 }, 
+                            "-=1"
+                        )
+                        .fromTo(".cta-buttons", 
+                            { opacity: 0, y: 20 },
+                            { opacity: 1, y: 0, duration: 0.8 }, 
+                            "-=0.8"
+                        )
+                        .fromTo(".social-icon", 
+                            { opacity: 0, y: 20 },
+                            { opacity: 1, y: 0, stagger: 0.1, duration: 0.8 }, 
+                            "-=0.6"
+                        )
+                        .fromTo(".hero-image", 
+                            { opacity: 0, scale: 0.8, x: 50 },
+                            { opacity: 1, scale: 1, x: 0, duration: 1.5 }, 
+                            "-=1.5"
+                        )
+                        .fromTo(".scroll-indicator", 
+                            { opacity: 0, y: -20 },
+                            { opacity: 1, y: 0, duration: 1 }, 
+                            "-=0.5"
+                        )
+                        .fromTo(".code-line", 
+                            { opacity: 0, x: -10 },
+                            { opacity: 1, x: 0, duration: 0.5, stagger: 0.3 }, 
+                            "-=0.5"
+                        );
                     }, 120);
+                } else {
+                    // If deep linking, just reveal everything immediately
+                    gsap.set(".name, .greeting, .hero .title, .cta-buttons, .hero-image", { opacity: 1, visibility: "visible", scale: 1 });
+                    init3DName();
+                    initMouseSpotlight();
+                    initChatbot();
+                    initTextReveal();
                 }
 
                 initNavLamp();

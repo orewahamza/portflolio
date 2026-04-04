@@ -478,6 +478,7 @@ a {
     margin-bottom: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
+    opacity: 0; /* Hidden initially */
 }
 
 .name {
@@ -488,11 +489,13 @@ a {
     margin-top: 0;
     margin-bottom: 15px;
     display: block; /* Block is more stable than inline-block for centering and overflow */
-    transition: transform 0.2s ease-out;
+    /* Remove CSS transition on transform to avoid fighting with GSAP animations */
+    transition: opacity 0.3s ease; 
     will-change: transform;
     -webkit-font-smoothing: antialiased;
     transform-style: preserve-3d;
-    perspective: 1000px;
+    perspective: 1200px;
+    opacity: 0; /* Hidden initially, GSAP will handle reveal */
 
     /* Theme Shine Effect */
     background: linear-gradient(
@@ -527,12 +530,14 @@ a {
     font-weight: 400;
     letter-spacing: 1px;
     display: block; /* Stable positioning */
+    opacity: 0; /* Hidden initially */
 }
 
 .cta-buttons {
     display: flex;
     gap: var(--space-lg);
     margin-bottom: var(--space-2xl);
+    opacity: 0; /* Hidden initially */
 }
 
 .btn {
@@ -620,7 +625,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: fadeInRight 1s ease 0.3s forwards;
+    /* animation: fadeInRight 1s ease 0.3s forwards; */ /* JS handles this now */
     opacity: 0;
 }
 
