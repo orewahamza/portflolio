@@ -88,9 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.classList.remove('is-loading');
                 if (window.lenis) window.lenis.start();
 
+                // Ensure all hero elements are visible immediately after loading screen disappears
+                // This prevents elements from being stuck hidden if the animation is skipped (e.g. deep linking)
+                gsap.set(".name, .greeting, .hero .title, .cta-buttons, .social-icon, .hero-image", { visibility: "visible" });
+
                 // Run Entrance Animations ONLY if we are at the top (Home)
                 if (!isDeepLink) {
-                    document.fonts.ready.then(() => {
+                    // Tiny delay to ensure browser layout engine settles (fixes "Requires Refresh" bugs)
+                    setTimeout(() => {
                         const heroTL = gsap.timeline({ defaults: { ease: "power4.out" } });
                         heroTL.from(".greeting", { opacity: 0, x: -30, duration: 1, delay: 0.2 })
                             .from(".name", { opacity: 0, y: 30, scale: 0.95, duration: 1.2 }, "-=0.8")
@@ -99,8 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             .from(".social-icon", { opacity: 0, y: 20, stagger: 0.1, duration: 0.8 }, "-=0.6")
                             .from(".hero-image", { opacity: 0, scale: 0.8, x: 50, duration: 1.5 }, "-=1.5")
                             .from(".scroll-indicator", { opacity: 0, y: -20, duration: 1 }, "-=0.5")
-                            .from(".code-line", { opacity: 0, x: -10, duration: 0.5, stagger: 0.3 }, "-=0.5");
-                    });
+                            .from(".code-line", { opacity: 0, x: -10, duration: 0.5, stagger: 0.3 }, "-=0.5")
+                            .eventCallback("onComplete", () => {
+                                // Final sync after animations to catch any layout changes
+                                ScrollTrigger.refresh();
+                            });
+                    }, 120);
                 }
 
                 initNavLamp();
