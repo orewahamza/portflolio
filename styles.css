@@ -2189,16 +2189,26 @@ a {
 .project-learn::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(0, 212, 255, 0.05), transparent 30%);
-    animation: rotateConic 10s linear infinite;
+    top: 50%;
+    left: 50%;
+    /* Ensure a massive square box that covers the card diagonal regardless of angle */
+    width: 250%; /* Using slightly more than 200% for extreme safety */
+    aspect-ratio: 1 / 1;
+    height: auto;
+    /* Create a softer, more focused ray of light */
+    background: conic-gradient(from 0deg, transparent 0%, rgba(0, 212, 255, 0.25) 15%, transparent 30%);
+    /* Ensure it starts centered. Translation + Rotation combined is key */
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotateConic 12s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    filter: blur(25px); /* Cinematic softness */
 }
+
 @keyframes rotateConic {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .project-tech {

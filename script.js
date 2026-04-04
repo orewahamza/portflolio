@@ -565,6 +565,7 @@ function initSectionWipes() {
             });
         },
         onLeaveBack: (batch) => {
+            if (isNavigating) return;
             gsap.to(batch, {
                 opacity: 0,
                 y: 10,
@@ -592,7 +593,10 @@ function initSectionWipes() {
                 }
             },
             onEnterBack: () => gsap.to(hireMeCard, { opacity: 1, duration: 0.8, ease: "power2.out", overwrite: "auto", pointerEvents: "auto" }),
-            onLeaveBack: () => gsap.to(hireMeCard, { opacity: 0, duration: 0.5, ease: "power2.inOut", overwrite: "auto", pointerEvents: "none" })
+            onLeaveBack: () => {
+                if (isNavigating) return;
+                gsap.to(hireMeCard, { opacity: 0, duration: 0.5, ease: "power2.inOut", overwrite: "auto", pointerEvents: "none" });
+            }
         });
     }
 
@@ -633,6 +637,7 @@ function initSectionWipes() {
                 });
             },
             onLeaveBack: (batch) => {
+                if (isNavigating) return;
                 gsap.to(batch, {
                     opacity: 0,
                     y: 20,
@@ -807,6 +812,7 @@ function initSectionWipes() {
                 });
             },
             onLeaveBack: (batch) => {
+                if (isNavigating) return;
                 gsap.to(batch, {
                     opacity: 0,
                     y: 30,
@@ -814,14 +820,7 @@ function initSectionWipes() {
                     stagger: 0.08,
                     ease: "power2.inOut",
                     overwrite: true,
-                    force3D: true,
-                    onComplete: function () {
-                        // Reset typing state if we want it to replay (optional)
-                        // batch.forEach(card => {
-                        //     delete card.querySelector('h3').dataset.typed;
-                        //     delete card.querySelector('p').dataset.typed;
-                        // });
-                    }
+                    force3D: true
                 });
             },
             once: false
@@ -948,9 +947,9 @@ function initSmoothScroll() {
                     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                     onComplete: () => {
                         setTimeout(() => {
+                            ScrollTrigger.refresh();
                             isNavigating = false;
                             activeLinkLock = false;
-                            ScrollTrigger.refresh();
                         }, 100);
                         if (history.pushState) history.pushState(null, null, href);
                     }
@@ -962,9 +961,9 @@ function initSmoothScroll() {
                     ease: "power3.inOut",
                     onComplete: () => {
                         setTimeout(() => {
+                            ScrollTrigger.refresh();
                             isNavigating = false;
                             activeLinkLock = false;
-                            ScrollTrigger.refresh();
                         }, 100);
                         if (history.pushState) history.pushState(null, null, href);
                     }
@@ -1761,6 +1760,7 @@ function initSkillBars() {
             onEnter: () => animateBars(bars),
             onEnterBack: () => animateBars(bars),
             onLeaveBack: () => {
+                if (isNavigating) return;
                 // Reset bars when scrolling up
                 bars.forEach(bar => {
                     gsap.set(bar, { width: 0, opacity: 0 });
@@ -1829,6 +1829,7 @@ function initTerminalAnimation() {
         onEnter: startTyping,
         onEnterBack: startTyping,
         onLeaveBack: () => {
+            if (isNavigating) return;
             codeElement.dataset.typingStarted = 'false';
             gsap.killTweensOf(codeElement);
             gsap.to(codeElement, {
