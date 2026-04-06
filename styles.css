@@ -399,6 +399,7 @@ a {
 ================================ */
 .hero {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -907,6 +908,7 @@ a {
 ================================ */
 .about-section {
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--bg-secondary);
     padding: var(--space-4xl) 0;
     display: flex;
@@ -1172,6 +1174,7 @@ a {
 ================================ */
 .resume-section {
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--bg-primary);
     padding: var(--space-4xl) 0;
     position: relative;
@@ -1446,6 +1449,7 @@ a {
 ================================ */
 .skills-section {
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--bg-primary);
     padding: var(--space-4xl) 0;
     position: relative;
@@ -1801,6 +1805,7 @@ a {
 ================================ */
 .services-section {
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--bg-primary);
     padding: var(--space-4xl) 0;
     position: relative;
@@ -1831,6 +1836,7 @@ a {
 
 .services-section {
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--bg-primary);
     padding: var(--space-4xl) 0;
     position: relative;
@@ -4614,7 +4620,7 @@ html {
     display: flex;
     flex-wrap: nowrap;
     min-height: 550px;
-    height: calc(100vh - 160px);
+    height: calc(100dvh - 160px);
     max-height: 800px;
 }
 

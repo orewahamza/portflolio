@@ -8,7 +8,19 @@ window.addEventListener('beforeunload', () => {
 });
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin);
-ScrollTrigger.config({ limitCallbacks: true });
+ScrollTrigger.config({ 
+    limitCallbacks: true,
+    autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" // Disable refresh on resize to prevent mobile jumps
+}); 
+
+// Manual throttled resize for ScrollTrigger
+let lastWidth = window.innerWidth;
+window.addEventListener('resize', () => {
+    if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        ScrollTrigger.refresh();
+    }
+}, { passive: true });
 
 document.addEventListener('DOMContentLoaded', () => {
     const bootHash = window.location.hash;
@@ -1458,8 +1470,8 @@ function createParticles() {
 
     const isMobile = window.innerWidth < 768;
 
-    // 1. Create Glowing Blue Particles (Going Up) - fewer on mobile
-    const bubbleCount = isMobile ? 15 : 50;
+    // 1. Create Glowing Blue Particles (Going Up) - reduced on mobile for stability
+    const bubbleCount = isMobile ? 8 : 50;
     for (let i = 0; i < bubbleCount; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'particle';
@@ -2489,23 +2501,25 @@ function initExtraAnimations() {
 
     // 7. Floating Terminals (More distinct but slower for elegance)
     gsap.to(".hero-image .desk-setup, .about-visual", {
-        y: -20,
-        duration: 4.5,
+        y: -25,
+        duration: 5,
         repeat: -1,
         yoyo: true,
         ease: "power1.inOut",
+        z: 0.01, // Force subpixel rendering
         force3D: true
     });
 
     // 8. Fluid Floating effect for About text block (Improved for smoothness)
     gsap.to(".about-text", {
-        y: -12,
-        duration: 5,
+        y: -15,
+        duration: 5.5,
         repeat: -1,
         yoyo: true,
         ease: "power1.inOut",
         // Multi-axis movement to make it feel more "alive" than a simple up/down
-        rotation: 0.5,
+        rotation: 0.8,
+        z: 0.01, // Force subpixel rendering
         force3D: true
     });
 }
@@ -2714,39 +2728,39 @@ function initTextReveal() {
 
             const tl = gsap.timeline();
             
-            // 1. Smooth Fade & Cinematic Reveal
+            // 1. Smooth Fade & Cinematic Reveal (Optimized for Mobile Performance)
+            const isMob = window.innerWidth < 768;
             tl.to(el, {
                 opacity: 1,
                 y: 0,
-                webkitMaskPosition: "0% 0%",
-                duration: 1.5, // Faster entrance
+                webkitMaskPosition: isMob ? "auto" : "0% 0%",
+                duration: isMob ? 0.6 : 1.5, // Faster entrance on mobile
                 ease: "power2.out",
                 force3D: true,
-                // Removed `index * 0.25` delay! Since each has its own ScrollTrigger based on their position, they stagger naturally.
-                // We add a tiny fixed delay to ensure smooth paint composite.
-                delay: 0.1, 
+                delay: isMob ? 0 : 0.1, 
                 onComplete: () => {
-                    // Clear the mask property here so it doesn't interfere with the smooth floating and pixel-snap the text.
-                    gsap.set(el, { clearProps: "webkitMaskImage,webkitMaskSize,webkitMaskPosition" });
+                    // Clear ONLY the mask properties. KEEP willChange active for a smooth, sub-pixel idle float.
+                    gsap.set(el, { clearProps: "webkitMaskImage,webkitMaskSize,webkitMaskPosition", z: 0.01 });
                 }
             });
 
-            // 2. Continuous "Alive" Floating
-            // Increased the distance (-15 instead of -8) and reduced duration text so it moves fast enough 
-            // that the browser can apply smooth fractional rendering without snapping to integer pixels ("staircasing").
-            tl.to(el, {
-                y: -12, 
-                duration: 2.8,
-                repeat: -1,
-                yoyo: true,
-                ease: "power1.inOut",
-                force3D: true
-            }, ">");
+            // 2. Continuous "Alive" Floating (Disabled on mobile for performance stability)
+            if (window.innerWidth >= 768) {
+                tl.to(el, {
+                    y: -12, 
+                    duration: 2.8,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut",
+                    z: 0.01,
+                    force3D: true
+                }, ">");
+            }
         };
 
         ScrollTrigger.create({
             trigger: el,
-            start: "top 80%", // Only trigger when section is more visible to prevent jumpy layout shifts
+            start: "top 100%", // Start immediately when enters viewport from bottom or if already in view
             onEnter: () => {
                 if (isNavigating) {
                     gsap.set(el, { opacity: 1, y: 0, webkitMaskPosition: "0% 0%" });
